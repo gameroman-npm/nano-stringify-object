@@ -1,5 +1,9 @@
 import isIdentifier from "is-identifier";
-import isObject from "is-obj";
+
+function isObject(value) {
+  const type = typeof value;
+  return value !== null && (type === "object" || type === "function");
+}
 
 const getOwnEnumerableKeys = (object) =>
   Object.keys(object).concat(

@@ -24,7 +24,6 @@
   },
   "devDependencies": {
     "is-identifier": "^1.0.1",
-    "is-obj": "^3.0.0",
     "oxfmt": "^0.38.0",
     "oxlint": "^1.50.0",
     "tsdown": "^0.21.2",
@@ -39,7 +38,6 @@
     "p-event": "6.0.1",
     "make-asynchronous": "1.1.0",
     "super-regex": "1.1.0",
-    "is-identifier": "1.0.1",
-    "is-obj": "3.0.0"
+    "is-identifier": "1.0.1"
   }
 }
