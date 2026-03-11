@@ -23,21 +23,9 @@
     "prepublishOnly": "bun run build"
   },
   "devDependencies": {
-    "is-identifier": "^1.0.1",
     "oxfmt": "^0.38.0",
     "oxlint": "^1.50.0",
     "tsdown": "^0.21.2",
     "typescript": "^5.9.3"
-  },
-  "inlinedDependencies": {
-    "reserved-identifiers": "1.2.0",
-    "identifier-regex": "1.0.1",
-    "function-timeout": "1.0.2",
-    "web-worker": "1.5.0",
-    "p-timeout": "6.1.4",
-    "p-event": "6.0.1",
-    "make-asynchronous": "1.1.0",
-    "super-regex": "1.1.0",
-    "is-identifier": "1.0.1"
   }
 }

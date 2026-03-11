@@ -1,12 +1,12 @@
-import isIdentifier from "is-identifier";
+import { isIdentifier } from "./is-identifier";
 
-function isObject(value) {
+function isObject(value: unknown) {
   const type = typeof value;
   return value !== null && (type === "object" || type === "function");
 }
 
-const getOwnEnumerableKeys = (object) =>
-  Object.keys(object).concat(
+const getOwnEnumerableKeys = (object): (string | symbol)[] =>
+  (<(string | symbol)[]>Object.keys(object)).concat(
     Object.getOwnPropertySymbols(object).filter((key) =>
       Object.prototype.propertyIsEnumerable.call(object, key),
     ),
@@ -30,7 +30,7 @@ export default function stringifyObject(
   options?: Options,
   pad?: string,
 ): string {
-  const seen = [];
+  const seen: unknown[] = [];
 
   return (function stringify(input, options = {}, pad = ""): string {
     const indent = options.indent || "\t";
@@ -52,7 +52,7 @@ export default function stringifyObject(
       };
     }
 
-    const expandWhiteSpace = (string) => {
+    const expandWhiteSpace = (string: string) => {
       if (options.inlineCharacterLimit === undefined) {
         return string;
       }
