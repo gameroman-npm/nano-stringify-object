@@ -1,8 +1,15 @@
-import getOwnEnumerableKeys from "get-own-enumerable-keys";
 import isIdentifier from "is-identifier";
 import isObject from "is-obj";
 
-const isRegexp = (v: unknown) => Object.prototype.toString.call(v) === "[object RegExp]";
+const getOwnEnumerableKeys = (object) =>
+  Object.keys(object).concat(
+    Object.getOwnPropertySymbols(object).filter((key) =>
+      Object.prototype.propertyIsEnumerable.call(object, key),
+    ),
+  );
+
+const isRegexp = (v: unknown) =>
+  Object.prototype.toString.call(v) === "[object RegExp]";
 
 const CHARACTER_ESCAPES = {
   "\n": String.raw`\n`,
@@ -217,8 +224,8 @@ export default function stringifyObject(
     // String escaping
     const stringified = String(input)
       .replaceAll("\\", "\\\\")
-      // oxlint-disable-next-line no-control-regex
       .replaceAll(
+        // oxlint-disable-next-line no-control-regex
         /[\u0000-\u001F\u007F]/g,
         (x) =>
           CHARACTER_ESCAPES[x] ??
