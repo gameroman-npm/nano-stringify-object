@@ -5,7 +5,7 @@ function isObject(value: unknown) {
   return value !== null && (type === "object" || type === "function");
 }
 
-const getOwnEnumerableKeys = (object): (string | symbol)[] =>
+const getOwnEnumerableKeys = (object: {}): (string | symbol)[] =>
   (<(string | symbol)[]>Object.keys(object)).concat(
     Object.getOwnPropertySymbols(object).filter((key) =>
       Object.prototype.propertyIsEnumerable.call(object, key),

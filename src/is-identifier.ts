@@ -1,4 +1,4 @@
-const identifiers = [
+const RESERVED_WORDS = new Set([
   "await",
   "break",
   "case",
@@ -51,14 +51,15 @@ const identifiers = [
   "Infinity",
   "NaN",
   "undefined",
-];
+]);
 
-const baseRegex = /[$_\p{ID_Start}][$_\u200C\u200D\p{ID_Continue}]*/u;
-const basePattern = `(?<![@#$_\\p{ID_Continue}\\p{ID_Start}])(?!(?:${identifiers.join("|")})(?![$_\\p{ID_Continue}]))${baseRegex.source}`;
-
-const regexExact = new RegExp(`^${basePattern}$`, "u");
+const IDENTIFIER_STRUCTURE =
+  /^[$_\p{ID_Start}][$_\u200C\u200D\p{ID_Continue}]*$/u;
 
 export function isIdentifier(value: string): boolean {
-  if (value.length > 1e5) return false;
-  return regexExact.test(value);
+  if (value.length === 0 || value.length > 1e5) return false;
+
+  if (RESERVED_WORDS.has(value)) return false;
+
+  return IDENTIFIER_STRUCTURE.test(value);
 }
