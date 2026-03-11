@@ -11,6 +11,10 @@
     "dist"
   ],
   "type": "module",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "format": "oxfmt",
     "lint": "oxlint",
@@ -19,9 +23,27 @@
     "prepublishOnly": "bun run build"
   },
   "devDependencies": {
+    "get-own-enumerable-keys": "^1.0.0",
+    "is-identifier": "^1.0.1",
+    "is-obj": "^3.0.0",
+    "is-regexp": "^3.1.0",
     "oxfmt": "^0.38.0",
     "oxlint": "^1.50.0",
     "tsdown": "^0.21.2",
     "typescript": "^5.9.3"
+  },
+  "inlinedDependencies": {
+    "get-own-enumerable-keys": "1.0.0",
+    "reserved-identifiers": "1.2.0",
+    "identifier-regex": "1.0.1",
+    "function-timeout": "1.0.2",
+    "web-worker": "1.5.0",
+    "p-timeout": "6.1.4",
+    "p-event": "6.0.1",
+    "make-asynchronous": "1.1.0",
+    "super-regex": "1.1.0",
+    "is-identifier": "1.0.1",
+    "is-obj": "3.0.0",
+    "is-regexp": "3.1.0"
   }
 }
