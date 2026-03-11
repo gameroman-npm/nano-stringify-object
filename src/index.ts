@@ -1,7 +1,8 @@
 import getOwnEnumerableKeys from "get-own-enumerable-keys";
 import isIdentifier from "is-identifier";
 import isObject from "is-obj";
-import isRegexp from "is-regexp";
+
+const isRegexp = (v: unknown) => Object.prototype.toString.call(v) === "[object RegExp]";
 
 const CHARACTER_ESCAPES = {
   "\n": String.raw`\n`,

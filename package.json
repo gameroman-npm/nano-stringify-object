@@ -26,7 +26,6 @@
     "get-own-enumerable-keys": "^1.0.0",
     "is-identifier": "^1.0.1",
     "is-obj": "^3.0.0",
-    "is-regexp": "^3.1.0",
     "oxfmt": "^0.38.0",
     "oxlint": "^1.50.0",
     "tsdown": "^0.21.2",
@@ -43,7 +42,6 @@
     "make-asynchronous": "1.1.0",
     "super-regex": "1.1.0",
     "is-identifier": "1.0.1",
-    "is-obj": "3.0.0",
-    "is-regexp": "3.1.0"
+    "is-obj": "3.0.0"
   }
 }
