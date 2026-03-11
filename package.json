@@ -1,0 +1,27 @@
+{
+  "name": "nano-stringify-object",
+  "version": "0.0.0",
+  "license": "MIT",
+  "author": "gameroman",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gameroman-npm/nano-stringify-object.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "scripts": {
+    "format": "oxfmt",
+    "lint": "oxlint",
+    "test": "bun test",
+    "build": "tsdown",
+    "prepublishOnly": "bun run build"
+  },
+  "devDependencies": {
+    "oxfmt": "^0.38.0",
+    "oxlint": "^1.50.0",
+    "tsdown": "^0.21.2",
+    "typescript": "^5.9.3"
+  }
+}
