@@ -78,24 +78,22 @@ export default function stringifyObject(
       return '"[Circular]"';
     }
 
-    const type = typeof input;
-
     if (
       input === null ||
       input === undefined ||
-      type === "number" ||
-      type === "boolean" ||
-      type === "function" ||
+      typeof input === "number" ||
+      typeof input === "boolean" ||
+      typeof input === "function" ||
       isRegexp(input)
     ) {
       return String(input);
     }
 
-    if (type === "bigint") {
+    if (typeof input === "bigint") {
       return String(input) + "n";
     }
 
-    if (type === "symbol") {
+    if (typeof input === "symbol") {
       const { description } = input;
 
       if (description === undefined) {
@@ -258,7 +256,7 @@ export interface Options {
   /**
    * Expected to return a boolean of whether to include the property property of the object object in the output.
    */
-  filter?(input: any, prop: string | symbol): boolean;
+  filter?(input: unknown, prop: string | symbol): boolean;
   /**
    * When set, will inline values up to inlineCharacterLimit length for the sake of more terse output.
    */
@@ -270,7 +268,7 @@ export interface Options {
    */
   transform?:
     | ((
-        input: any[] | object,
+        input: unknown[] | object,
         prop: number | string | symbol,
         originalResult: string,
       ) => string)
