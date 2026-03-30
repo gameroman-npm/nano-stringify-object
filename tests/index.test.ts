@@ -101,17 +101,17 @@ describe("stringifyObject", () => {
     const value = { val: 10 };
     const object = { foo: value, bar: value };
     const actual = stringifyObject(object, {
-      filter: (object, prop) => prop !== "foo",
+      filter: (_object, prop) => prop !== "foo",
     });
     expect(actual).toBe("{\n\tbar: {\n\t\tval: 10\n\t}\n}");
 
     const actual2 = stringifyObject(object, {
-      filter: (object, prop) => prop !== "bar",
+      filter: (_object, prop) => prop !== "bar",
     });
     expect(actual2).toBe("{\n\tfoo: {\n\t\tval: 10\n\t}\n}");
 
     const actual3 = stringifyObject(object, {
-      filter: (object, prop) => prop !== "val" && prop !== "bar",
+      filter: (_object, prop) => prop !== "val" && prop !== "bar",
     });
     expect(actual3).toBe("{\n\tfoo: {}\n}");
   });
@@ -123,7 +123,7 @@ describe("stringifyObject", () => {
       },
       bar: 9,
       baz: [8],
-    };
+    } as const;
 
     const actual = stringifyObject(object, {
       transform(object, prop, result) {
@@ -149,13 +149,13 @@ describe("stringifyObject", () => {
   });
 
   test("doesn't  crash with circular references in arrays", () => {
-    const array = [];
+    const array: unknown[] = [];
     array.push(array);
     expect(() => {
       stringifyObject(array);
     }).not.toThrow();
 
-    const nestedArray = [[]];
+    const nestedArray: [unknown[]] = [[]];
     nestedArray[0][0] = nestedArray;
     expect(() => {
       stringifyObject(nestedArray);
@@ -163,7 +163,7 @@ describe("stringifyObject", () => {
   });
 
   test("handle circular references in arrays", () => {
-    const array2 = [];
+    const array2: unknown[] = [];
     const array = [array2];
     array2[0] = array2;
 
@@ -348,7 +348,7 @@ describe("stringifyObject", () => {
     expect(stringifyObject(emptyMap)).toBe("new Map()");
 
     // Map with various types
-    const map = new Map([
+    const map = new Map<unknown, unknown>([
       ["string", "value"],
       [42, "number key"],
       [true, "boolean key"],
@@ -471,7 +471,7 @@ describe("stringifyObject", () => {
     expect(stringifyObject(invalidDate)).toBe("new Date('Invalid Date')");
 
     // Object with numeric keys
-    const numericKeys = {};
+    const numericKeys: Record<number, string> = {};
     numericKeys[123] = "numeric";
     numericKeys[456] = "string numeric";
     expect(stringifyObject(numericKeys)).toBe(
@@ -479,7 +479,8 @@ describe("stringifyObject", () => {
     );
 
     // Reserved keywords as keys - quoted for safety
-    const reserved = {};
+    const reserved: Partial<{ class: string; const: string; return: string }> =
+      {};
     reserved.class = "reserved";
     reserved.const = "keyword";
     reserved.return = "statement";

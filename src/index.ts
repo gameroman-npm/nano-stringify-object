@@ -15,7 +15,7 @@ const getOwnEnumerableKeys = (object: {}): (string | symbol)[] =>
 const isRegexp = (v: unknown) =>
   Object.prototype.toString.call(v) === "[object RegExp]";
 
-const CHARACTER_ESCAPES = {
+const CHARACTER_ESCAPES: Record<string, string> = {
   "\n": String.raw`\n`,
   "\r": String.raw`\r`,
   "\t": String.raw`\t`,
@@ -103,7 +103,7 @@ export default function stringifyObject(
       // Check for well-known symbols first
       if (
         description?.startsWith("Symbol.") &&
-        Symbol[description.slice(7)] === input
+        Symbol[description.slice(7) as keyof typeof Symbol] === input
       ) {
         return description;
       }
@@ -184,7 +184,7 @@ export default function stringifyObject(
 
       if (options.filter) {
         objectKeys = objectKeys.filter((element) =>
-          options.filter(input, element),
+          options.filter!(input, element),
         );
       }
 
@@ -207,7 +207,11 @@ export default function stringifyObject(
             key = stringify(element, options);
           }
 
-          let value = stringify(input[element], options, pad + indent);
+          let value = stringify(
+            (input as Record<string | symbol, unknown>)[element],
+            options,
+            pad + indent,
+          );
           if (options.transform) {
             value = options.transform(input, element, value);
           }
@@ -224,6 +228,7 @@ export default function stringifyObject(
     }
 
     // String escaping
+    // oxlint-disable-next-line no-base-to-string have to use `any` here, `isObject` check prevents this
     const stringified = String(input)
       .replaceAll("\\", "\\\\")
       .replaceAll(
@@ -231,7 +236,7 @@ export default function stringifyObject(
         /[\u0000-\u001F\u007F]/g,
         (x) =>
           CHARACTER_ESCAPES[x] ??
-          `\\u${x.codePointAt(0).toString(16).padStart(4, "0")}`,
+          `\\u${x.codePointAt(0)!.toString(16).padStart(4, "0")}`,
       );
 
     if (options.singleQuotes === false) {
@@ -268,7 +273,8 @@ export interface Options {
    */
   transform?:
     | ((
-        input: unknown[] | object,
+        // oxlint-disable-next-line no-explicit-any have to use `any` here
+        input: any,
         prop: number | string | symbol,
         originalResult: string,
       ) => string)
