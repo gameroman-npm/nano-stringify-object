@@ -102,7 +102,7 @@ export default function stringifyObject(
 
       // Check for well-known symbols first
       if (
-        description?.startsWith("Symbol.") &&
+        description.startsWith("Symbol.") &&
         Symbol[description.slice(7) as keyof typeof Symbol] === input
       ) {
         return description;
@@ -228,7 +228,7 @@ export default function stringifyObject(
     }
 
     // String escaping
-    // oxlint-disable-next-line no-base-to-string have to use `any` here, `isObject` check prevents this
+    // oxlint-disable-next-line no-base-to-string
     const stringified = String(input)
       .replaceAll("\\", "\\\\")
       .replaceAll(
@@ -273,7 +273,7 @@ export interface Options {
    */
   transform?:
     | ((
-        // oxlint-disable-next-line no-explicit-any have to use `any` here
+        // oxlint-disable-next-line no-explicit-any
         input: any,
         prop: number | string | symbol,
         originalResult: string,
