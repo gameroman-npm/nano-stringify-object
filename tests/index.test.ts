@@ -44,7 +44,7 @@ describe("stringifyObject", () => {
       singleQuotes: false,
     });
 
-    expect(actual + "\n").toMatchSnapshot();
+    expect(`${actual}\n`).toMatchSnapshot();
     expect(
       stringifyObject(
         { foo: String.raw`a ' b ' c \' d` },
@@ -132,7 +132,7 @@ describe("stringifyObject", () => {
         }
 
         if (prop === "bar") {
-          return "'" + result + "L'";
+          return `'${result}L'`;
         }
 
         if (object[prop] === 8) {
@@ -336,7 +336,7 @@ describe("stringifyObject", () => {
     ); // Delete
 
     // Test a string with multiple special characters
-    const mixed = "a\tb\nc\rd\fe\vf\bg\0h" + String.fromCodePoint(1) + "i";
+    const mixed = "a\tb\nc\rd\fe\vf\bg\0h\u0001i";
     expect(stringifyObject(mixed)).toBe(
       String.raw`'a\tb\nc\rd\fe\vf\bg\0h\u0001i'`,
     );
