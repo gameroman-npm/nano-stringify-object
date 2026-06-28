@@ -90,7 +90,7 @@ export default function stringifyObject(
     }
 
     if (typeof input === "bigint") {
-      return String(input) + "n";
+      return `${input}n`;
     }
 
     if (typeof input === "symbol") {
@@ -137,15 +137,12 @@ export default function stringifyObject(
         .map((item) => {
           if (isMap) {
             const [key, value] = item;
-            return (
-              tokens.indent +
-              `[${stringify(key, options, pad + indent)}, ${stringify(value, options, pad + indent)}]`
-            );
+            return `${tokens.indent}[${stringify(key, options, pad + indent)}, ${stringify(value, options, pad + indent)}]`;
           }
 
-          return tokens.indent + stringify(item, options, pad + indent);
+          return `${tokens.indent}${stringify(item, options, pad + indent)}`;
         })
-        .join("," + tokens.newlineOrSpace);
+        .join(`,${tokens.newlineOrSpace}`);
 
       seen.pop();
 
@@ -168,9 +165,9 @@ export default function stringifyObject(
             value = options.transform(input, index, value);
           }
 
-          return tokens.indent + value;
+          return `${tokens.indent}${value}`;
         })
-        .join("," + tokens.newlineOrSpace);
+        .join(`,${tokens.newlineOrSpace}`);
 
       seen.pop();
 
@@ -216,9 +213,9 @@ export default function stringifyObject(
             value = options.transform(input, element, value);
           }
 
-          return tokens.indent + key + ": " + value;
+          return `${tokens.indent}${key}: ${value}`;
         })
-        .join("," + tokens.newlineOrSpace);
+        .join(`,${tokens.newlineOrSpace}`);
 
       seen.pop();
 
